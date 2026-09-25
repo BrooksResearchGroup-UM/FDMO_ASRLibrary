@@ -35,7 +35,7 @@ with 276 Gen3 ancestors injected. Model checkpoint in `post_ancestors/latent_spa
 ## MUSCLE5 Installation 
 1. Download from the MUSCLE github page (https://github.com/rcedgar/muscle/releases/tag/v5.3)
    ```bash
-MUSCLE5 --version
+   MUSCLE5 --version
 
 ## PhyML Installation 
 1. Download from the PhyML github page (https://github.com/stephaneguindon/phyml)
