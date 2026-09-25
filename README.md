@@ -1,4 +1,4 @@
-# FDMO_ASRLibrary
+# Flavin Dependent Monooxygenase Ancestral Library Creation 
 
 Computational pipeline supporting the Gen3 FDMO ancestral sequence reconstruction library paper.
 
