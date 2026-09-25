@@ -15,20 +15,9 @@ import os
 # Define model
 
 class MSA_Dataset(Dataset):
-    '''
-    Dataset class for multiple sequence alignment.
-    '''
     
     def __init__(self, seq_msa_binary, seq_weight, seq_keys):
-        '''
-        seq_msa_binary: a two dimensional np.array. 
-                        size: [num_of_sequences, length_of_msa*num_amino_acid_types]
-        seq_weight: one dimensional array. 
-                    size: [num_sequences]. 
-                    Weights for sequences in a MSA. 
-                    The sum of seq_weight has to be equal to 1 when training latent space models using VAE
-        seq_keys: name of sequences in MSA
-        '''
+
         super(MSA_Dataset).__init__()
         self.seq_msa_binary = seq_msa_binary
         self.seq_weight = seq_weight
@@ -76,9 +65,6 @@ class VAE(nn.Module):
         self.decoder_linears.append(nn.Linear(num_hidden_units[0], dim_msa_vars))
 
     def encoder(self, x):
-        '''
-        encoder transforms x into latent space z
-        '''
         
         h = x
         for T in self.encoder_linears:
@@ -92,9 +78,6 @@ class VAE(nn.Module):
         return mu, sigma
 
     def decoder(self, z):
-        '''
-        decoder transforms latent space z into p, which is the log probability  of x being 1.
-        '''
         
         h = z
         for i in range(len(self.decoder_linears)-1):
@@ -118,8 +101,7 @@ class VAE(nn.Module):
         ## sample z from q(z|x)
         mu, sigma = self.encoder(x)
         eps = torch.randn_like(sigma) 
-        '''Returns a tensor with the same size as input that is filled with 
-        random numbers from a normal distribution with mean 0 and variance 1.'''
+
         z = mu + sigma*eps
 
         ## compute log p(x|z)
