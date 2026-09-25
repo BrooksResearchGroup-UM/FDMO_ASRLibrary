@@ -2,20 +2,9 @@
 # -*- coding: utf-8 -*-
 
 __author__ = "Aidan Cosgrove <aidancos@umich.edu>"
-
-"""
-ReactivityMaster.py
-
-1. Consolidates all substrate reactivity spreadsheets into one master DataFrame
-2. Produces per-substrate per-plate heatmaps using the existing color scheme
-3. Saves master CSV for latent space overlay
-
-Sheet naming conventions:
-  - Files with 'G3' in name: sheets are gen 3 pt1, pt2, pt3
-  - All other files: sheets are gen 1, gen 2, gen 3 pt1, pt2, pt3
-
-Color scheme: white → #115472 (opacity gradient, all ancestors for now)
-"""
+# 1. Consolidates all substrate reactivity spreadsheets into one master DataFrame
+# 2. Produces per-substrate per-plate heatmaps using the existing color scheme
+# 3. Saves master CSV for latent space overlay
 
 import os
 import re
@@ -27,18 +16,14 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import openpyxl
 
-################################################
-# Paths
-################################################
+#paths
 
 DATA_DIR    = os.path.expanduser("~/KJ_G3Paper/KJ_G3PAPER/plate_heatmaps")
 RESULTS_DIR = os.path.join(os.path.dirname(DATA_DIR), "heatmap_output")
 MASTER_CSV  = os.path.join(os.path.dirname(DATA_DIR), "master_reactivity.csv")
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
-################################################
-# Color palette
-################################################
+#color
 
 ANCESTOR_CMAP = mcolors.LinearSegmentedColormap.from_list(
     "ancestor", [(1, 1, 1, 1), mcolors.to_rgba("#115472", 1)]
@@ -46,9 +31,6 @@ ANCESTOR_CMAP = mcolors.LinearSegmentedColormap.from_list(
 ROW_LABELS = list("ABCDEFGH")
 COL_LABELS = [str(i) for i in range(1, 13)]
 
-################################################
-# Sheet name normalizer
-################################################
 
 def normalize_sheet_name(sheet_name, is_g3_file):
     # strip common prefixes before matching
@@ -70,10 +52,6 @@ def normalize_sheet_name(sheet_name, is_g3_file):
     return None
 
 def get_generation_labels(sheet_names, is_g3_file):
-    """
-    Map sheet names to generation labels in order.
-    Falls back to positional mapping if regex fails.
-    """
     if is_g3_file:
         positional = ["gen3p1", "gen3p2", "gen3p3"]
     else:
@@ -87,14 +65,8 @@ def get_generation_labels(sheet_names, is_g3_file):
         labels.append(label)
     return labels
 
-################################################
-# Plate parser (same logic as plate_heatmaps.py)
-################################################
 
 def parse_plate_positional(ws):
-    """
-    For sheets with no row labels — finds the 8×12 numeric grid positionally.
-    """
     plate = np.zeros((8, 12))
     numeric_rows = []
     for row in ws.iter_rows(values_only=True):
@@ -251,11 +223,7 @@ def main():
     return master_df
 
 def parse_plate_wellid(ws, value_col=None):
-    """
-    For sheets where rows are individual wells (A01, A02... H12)
-    and reactivity is in a specific column.
-    value_col: if None, uses the last numeric column.
-    """
+
     plate = np.zeros((8, 12))
     row_order = {r: i for i, r in enumerate(ROW_LABELS)}
 
@@ -289,7 +257,7 @@ def parse_plate_wellid(ws, value_col=None):
     return plate
 
 def detect_format(ws):
-    """Returns 'wellid', 'labeled', or 'positional'"""
+#Returns 'wellid', 'labeled', or 'positional'
     for row in ws.iter_rows(values_only=True):
         for val in row:
             if isinstance(val, str):
@@ -302,9 +270,7 @@ def detect_format(ws):
                 if val in list('ABCDEFGH'):
                     return 'labeled'
     return 'positional'
-################################################
-# Heatmap plotter
-################################################
+
 
 def plot_plate(plate, title, cmap, out_path, vmin=0, vmax=1.0):
     fig, ax = plt.subplots(figsize=(10, 5))
@@ -343,9 +309,7 @@ def plot_plate(plate, title, cmap, out_path, vmin=0, vmax=1.0):
                 facecolor='white', edgecolor='none')
     plt.close()
 
-################################################
-# Main consolidation pipeline
-################################################
+#consolidation loop
 
 def main():
     xlsx_files = [f for f in os.listdir(DATA_DIR)
