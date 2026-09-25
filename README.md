@@ -10,8 +10,6 @@ Scripts and models for the original FDMO latent space analysis (Narayan Lab VAE,
 - `clustering/` — K-means clustering (k=40), elbow method
 - `scripts/` — supporting utilities
 
-Source: `/home/cdchiang/for_azamh/vae/20240324_2_PF01494` (gollum)
-
 ### post_ancestors/
 Scripts for the ancestral sequence reconstruction pipeline and updated latent space analysis.
 - `ASR_pipeline/` — MUSCLE5 alignment, indel filtering, TrimAl, PhyML, PyASR, post-processing, filtering
@@ -35,8 +33,16 @@ with 276 Gen3 ancestors injected. Model checkpoint in `post_ancestors/latent_spa
    ```bash
    hmmalign --version
 ## MUSCLE5 Installation 
+1. Download from the MUSCLE github page (https://github.com/rcedgar/muscle/releases/tag/v5.3)
+   ```bash
+MUSCLE5 --version
 
-## 
+## PhyML Installation 
+1. Download from the PhyML github page (https://github.com/stephaneguindon/phyml)
 
-## Citation
+## PyASR Installation 
+1. Go to the PyASR webpage (http://pypi.org/project/pyasr/)
+2. Copy the pip install command from the pypi page.
+   ```bash
+   pip install pyasr
 
