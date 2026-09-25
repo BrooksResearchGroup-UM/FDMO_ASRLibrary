@@ -7,18 +7,12 @@ from Bio.Seq import Seq
 from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
 
-## change current directory (Change this!!!)
 os.chdir("/home/cdchiang/for_azamh/vae")
 
-## define output directory (Change this!!!)
 os.mkdir("./data/test")
 output_folder = "data/test"
 
 ## A MSA file including both the training and testing dataset should be loaded here.
-'''The testing dataset including WT and evolved seuqneces was pasted to the end of the training dataset 
-and combined into a single file. All sequences were aligned by hmmer-3.1 using a "seed" file of 
-protein family 01494 (PF01494). You are able to download the seed file from Pfam database'''
-
 file_name = "./data/PF01494_MSA_4.fasta"
 
 ## TropB was selected to be the query sequence for downstream data processing.
