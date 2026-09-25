@@ -19,16 +19,24 @@ Scripts for the ancestral sequence reconstruction pipeline and updated latent sp
 - `analysis/` — reactivity data processing
 - `data/` — plate layouts, reactivity CSVs
 
-Source: `/home/azamh/esm_screen` (gollum)
-
 ## Dependencies
 - Python 3.11
 - PyTorch, scikit-learn, BioPython, pandas, numpy, matplotlib, plotly
-- MUSCLE5, TrimAl, PhyML, ModelTest-NG, PyASR, PAML
+- MUSCLE5, TrimAl, PhyML, ModelTest-NG, PyASR, PAML, HMMER
 
 ## Model
 The latent space model used for figures is a 2D VAE trained on 33,972 FDMO sequences (352 aa)
 with 276 Gen3 ancestors injected. Model checkpoint in `post_ancestors/latent_space/models/`.
 
+## HMMER Installation 
+1. Download HMMER from the official [HMMER website](http://hmmer.org/download.html).
+2. Follow the installation instructions provided on the website or in the downloaded package.
+3. To verify that HMMER has been installed successfully, run the following command in your terminal or command line:
+   ```bash
+   hmmalign --version
+## MUSCLE5 Installation 
+
+## 
+
 ## Citation
-TBD
+
